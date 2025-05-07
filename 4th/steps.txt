@@ -1,0 +1,55 @@
+1. Create project folder named flask-app
+2. Inside flask-app, create app.py:
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "🎉 Hello, Pranav! Your Flask app is running inside Docker!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+✅ 3. Create requirements.txt:
+
+flask
+
+✅ 4. Create Dockerfile (no extension):
+# Use Python base image
+FROM python:3.10-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy files into the container
+COPY . .
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+# Run the application
+CMD ["python", "app.py"]
+
+⚙️ Terminal Commands (Run in project folder)'
+
+✅ 5. Build the Docker image:
+
+docker build -t flask-docker-app .
+
+✅ 6. Run the container and map port:
+
+docker run -d -p 5000:5000 flask-docker-app
+
+✅ 7. Confirm container is running:
+
+docker ps
+
+✅ 8. Open browser:
+
+http://localhost:5000
+
+You should see:
+🎉 Hello from Dockerized Flask App!
+
